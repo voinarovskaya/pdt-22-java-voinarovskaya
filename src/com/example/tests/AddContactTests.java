@@ -1,14 +1,14 @@
 package com.example.tests;
 
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.Test;
 
 public class AddContactTests extends TestBase {  
  
   @Test
   public void testNonEmptyCreationsContact() throws Exception {
-    openMainPage();
-    gotoAddContact();
+	  
+	app.getNavigationHelper().openMainPage();
+    app.getContactHelper().gotoAddContact();
     ContactData contact = new ContactData();
     contact.firstname = "alisa";
     contact.lastname = "voinarovskaya";
@@ -23,9 +23,9 @@ public class AddContactTests extends TestBase {
     contact.birthday = "5";
     contact.birthyear = "2014";
     contact.bitrhmonth = "February";    
-	fiilFormContact(contact);
-    submitAddContact();
-    gotoHomePage();
+    app.getContactHelper().fiilFormContact(contact);
+    app.getContactHelper().submitAddContact();
+    app.getNavigationHelper().gotoHomePage();
   }
  
 }

@@ -1,17 +1,20 @@
 package com.example.tests;
 
+
 public class GroupData {
-	public String groupname;
-	public String groupheader;
-	public String groupfooter;
+	public String name;
+	public String header;
+	public String footer;
 
 	public GroupData(String groupname, String groupheader, String groupfooter) {
-		this.groupname = groupname;
-		this.groupheader = groupheader;
-		this.groupfooter = groupfooter;
+		this.name = groupname;
+		this.header = groupheader;
+		this.footer = groupfooter;
 	}
 	
 	public GroupData() {
 	
 	}
+
+	
 }
