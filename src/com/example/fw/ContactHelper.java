@@ -35,4 +35,18 @@ public class ContactHelper extends HelperBase {
 		select(By.name("bmonth"), contact.bitrhmonth);
 		select(By.name("new_group"), contact.group);   
 	}
+
+	public void initContactModify(int index) {
+		click(By.xpath("//*[@class='odd'][" + index +"]/td[7]/a"));
+	}
+	
+	public void submitContactModify() {		
+		click(By.xpath("//*[@value='Update']"));	
+	}
+	
+	
+	public void submitContactDelete() {		
+		click(By.xpath("//*[@value='Delete']"));		
+	}		
+
 }

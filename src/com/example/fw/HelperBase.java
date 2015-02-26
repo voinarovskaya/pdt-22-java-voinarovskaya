@@ -53,8 +53,11 @@ public abstract class HelperBase {
 	  }
 
 	protected void input(By locator, String text) {
-		driver.findElement(locator).clear();	   
-		driver.findElement(locator).sendKeys(text);
+		if (text!=null) {
+			driver.findElement(locator).clear();	   
+			driver.findElement(locator).sendKeys(text);
+		}
+		
 	}
 
 	protected void click(By locator) {
@@ -62,6 +65,9 @@ public abstract class HelperBase {
 	}	
 	
 	protected void select(By locator, String text) {
-		new Select(driver.findElement(locator)).selectByVisibleText(text);
+		if (text!=null) {
+			new Select(driver.findElement(locator)).selectByVisibleText(text);
+		}
+		
 	}
 }
