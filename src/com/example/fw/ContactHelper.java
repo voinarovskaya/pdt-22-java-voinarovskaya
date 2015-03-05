@@ -1,6 +1,10 @@
 package com.example.fw;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import com.example.tests.ContactData;
 
@@ -33,7 +37,10 @@ public class ContactHelper extends HelperBase {
 		input(By.name("phone2"), contact.phone2);	   
 		select(By.name("bday"), contact.birthday);
 		select(By.name("bmonth"), contact.bitrhmonth);
-		select(By.name("new_group"), contact.group);   
+		if (contact.group != null) {
+			select(By.name("new_group"), contact.group);   
+		}
+		
 	}
 
 	public void initContactModify(int index) {
@@ -47,6 +54,20 @@ public class ContactHelper extends HelperBase {
 	
 	public void submitContactDelete() {		
 		click(By.xpath("//*[@value='Delete']"));		
-	}		
+	}
 
+	public List<ContactData> getContact() {
+		List<ContactData> contacts = new ArrayList<ContactData>();
+		List<WebElement> checkboxes = driver.findElements(By.name("entry"));		
+		for (WebElement checkbox : checkboxes) {
+			ContactData contact = new ContactData();
+			contact.firstname = checkbox.findElement(By.xpath("//*[@name='entry']/td[3]")).getText();
+			contact.lastname = checkbox.findElement(By.xpath("//*[@name='entry']/td[2]")).getText();
+			contact.email = checkbox.findElement(By.xpath("//*[@name='entry']/td[4]/a")).getText();
+			contact.home = checkbox.findElement(By.xpath("//*[@name='entry']/td[5]")).getText();
+			
+			contacts.add(contact);			
+		}	
+		return contacts;
+	}		
 }
