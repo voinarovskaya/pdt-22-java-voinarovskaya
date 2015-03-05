@@ -68,8 +68,8 @@ public class TestBase {
 		    for (int j = 0; j < 9; j++) {
 		    	 contact.phone2 = contact.phone2 + rnd.nextInt(9);
 			}		   
-		    contact.birthday = String.valueOf(rnd.nextInt(28));
-		    contact.birthyear = String.valueOf(1960 + rnd.nextInt(50));
+		    contact.birthday = String.valueOf(rnd.nextInt(27) +1);
+		    contact.birthyear = String.valueOf(1960 + rnd.nextInt(50) +1);
 		    contact.bitrhmonth = "February";  			
 			list.add(new Object[]{contact});			
 		}

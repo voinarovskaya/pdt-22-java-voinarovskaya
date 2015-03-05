@@ -44,7 +44,7 @@ public class ContactHelper extends HelperBase {
 	}
 
 	public void initContactModify(int index) {
-		click(By.xpath("//*[@class='odd'][" + index +"]/td[7]/a"));
+		click(By.xpath("//*[@name='entry'][" + (index + 1) +"]/td[7]/a"));
 	}
 	
 	public void submitContactModify() {		
@@ -58,13 +58,15 @@ public class ContactHelper extends HelperBase {
 
 	public List<ContactData> getContact() {
 		List<ContactData> contacts = new ArrayList<ContactData>();
-		List<WebElement> checkboxes = driver.findElements(By.name("entry"));		
+		List<WebElement> checkboxes = driver.findElements(By.name("entry"));
+		int i = 1;
 		for (WebElement checkbox : checkboxes) {
 			ContactData contact = new ContactData();
-			contact.firstname = checkbox.findElement(By.xpath("//*[@name='entry']/td[3]")).getText();
-			contact.lastname = checkbox.findElement(By.xpath("//*[@name='entry']/td[2]")).getText();
-			contact.email = checkbox.findElement(By.xpath("//*[@name='entry']/td[4]/a")).getText();
-			contact.home = checkbox.findElement(By.xpath("//*[@name='entry']/td[5]")).getText();
+			contact.firstname = driver.findElement(By.xpath("//*[@name='entry'][" + i + "]/td[3]")).getText();
+			contact.lastname = driver.findElement(By.xpath("//*[@name='entry'][" + i + "]/td[2]")).getText();
+			contact.email = driver.findElement(By.xpath("//*[@name='entry'][" + i + "]/td[4]/a")).getText();
+			contact.home = driver.findElement(By.xpath("//*[@name='entry'][" + i + "]/td[5]")).getText();
+			i++;
 			
 			contacts.add(contact);			
 		}	
