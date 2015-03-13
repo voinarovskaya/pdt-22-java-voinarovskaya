@@ -1,86 +1,49 @@
 package com.example.tests;
 
-import static org.testng.Assert.assertEquals;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
 
 import org.testng.annotations.Test;
+
+import com.example.utils.SortedListOf;
 
 public class ContactTests extends TestBase {  
 	
 	static Comparator<ContactData> snorderer = new Comparator<ContactData>() {
 
         public int compare(ContactData o1, ContactData o2) {
-            return o1.firstname.compareTo(o2.firstname);
+            return o1.getFirstname().compareTo(o2.getFirstname());
         }
     };
 	
   @Test(dataProvider = "randomContactValidGenerator")
   public void testCreationsContact(ContactData contact) throws Exception {	  
-	app.getNavigationHelper().openMainPage();
-	
-	List<ContactData> oldList = app.getContactHelper().getContact();
-	
-    app.getContactHelper().gotoAddContact();       
-   
-    app.getContactHelper().fiilFormContact(contact);
-    app.getContactHelper().submitAddContact();
-    app.getNavigationHelper().openMainPage();
-    
-    List<ContactData> newList = app.getContactHelper().getContact();  
-    
-    oldList.add(contact);
-    Collections.sort(oldList, snorderer);   
-    Collections.sort(newList, snorderer); 
-    assertEquals(oldList, newList);
+	SortedListOf<ContactData> oldList = app.getContactHelper().getContact();	
+    app.getContactHelper().createdContact(contact);       
+    SortedListOf<ContactData> newList = app.getContactHelper().getContact();    
+    assertThat(newList, equalTo(oldList.withAdded(contact)));   
   }
   
   @Test
   public void testContactDelete() throws Exception {	  
-	app.getNavigationHelper().openMainPage();    
-	
-	List<ContactData> oldList = app.getContactHelper().getContact();
-	
+	SortedListOf<ContactData> oldList = app.getContactHelper().getContact();	
 	Random rnd = new Random();
-    int index = rnd.nextInt(oldList.size()-1);
-    
-	app.getContactHelper().initContactModify(index);   
-    app.getContactHelper().submitContactDelete();
-    app.getNavigationHelper().openMainPage();
-    
-    List<ContactData> newList = app.getContactHelper().getContact();  
-    
-    oldList.remove(index);
-    Collections.sort(oldList, snorderer);   
-    Collections.sort(newList, snorderer);    
-    assertEquals(oldList, newList);
+    int index = rnd.nextInt(oldList.size()-1);    
+	app.getContactHelper().deleteContact(index);      
+    SortedListOf<ContactData> newList = app.getContactHelper().getContact();      
+    assertThat(newList, equalTo(oldList.without(index)));   
   }
   
   @Test(dataProvider = "randomContactValidGenerator")
-  public void testContactModify(ContactData contact) throws Exception {	  
-	app.getNavigationHelper().openMainPage();
-	
-	List<ContactData> oldList = app.getContactHelper().getContact();
-	
+  public void testContactModify(ContactData contact) throws Exception {
+	SortedListOf<ContactData> oldList = app.getContactHelper().getContact();	
 	Random rnd = new Random();
-    int index = rnd.nextInt(oldList.size()-1);
-    
-	app.getContactHelper().initContactModify(index);
-    
-    app.getContactHelper().fiilFormContact(contact);
-    app.getContactHelper().submitContactModify();
-    app.getNavigationHelper().openMainPage();
-    
-    List<ContactData> newList = app.getContactHelper().getContact();  
-    
-    oldList.remove(index);
-    oldList.add(contact);
-    Collections.sort(oldList, snorderer);   
-    Collections.sort(newList, snorderer);  
-    assertEquals(oldList, newList);
-  }
- 
+    int index = rnd.nextInt(oldList.size()-1);    
+	app.getContactHelper().modifyContact(index, contact);    
+    SortedListOf<ContactData> newList = app.getContactHelper().getContact();  
+    assertThat(newList, equalTo(oldList.without(index).withAdded(contact)));   
+  } 
 }

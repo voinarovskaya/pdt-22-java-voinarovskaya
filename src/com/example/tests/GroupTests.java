@@ -1,75 +1,52 @@
 package com.example.tests;
 
-import static org.testng.Assert.assertEquals;
 
-import java.util.Collections;
-import java.util.List;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
 import java.util.Random;
 
 import org.testng.annotations.Test;
 
+import com.example.utils.SortedListOf;
+
 public class GroupTests extends TestBase{	
 	
   @Test(dataProvider = "randomDataValidGenerator")
-  public void testGroupCreationValid(GroupData group) throws Exception {
-    app.getNavigationHelper().openMainPage();
-    app.getNavigationHelper().gotoGroupPage();
+  public void testGroupCreationValid(GroupData group) throws Exception {    
+    SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();
     
-    List<GroupData> oldList = app.getGroupHelper().getGroups();
+    app.getGroupHelper().createdGroup(group);    	
     
-    app.getGroupHelper().initGroupGreated();   
-    app.getGroupHelper().fiilGroupForm(group);
-    app.getGroupHelper().submitGroupGreation();
-    app.getGroupHelper().returnToGroupsPage();
+    SortedListOf<GroupData> newList = app.getGroupHelper().getGroups();
     
-    List<GroupData> newList = app.getGroupHelper().getGroups();
-    
-    oldList.add(group);
-    Collections.sort(oldList);    
-    assertEquals(oldList, newList);
+    assertThat(newList, equalTo(oldList.withAdded(group)));    
   }
  
   @Test
-  public void testGroupDeleteValid() throws Exception {
-    app.getNavigationHelper().openMainPage();
-    app.getNavigationHelper().gotoGroupPage();
-       
-    List<GroupData> oldList = app.getGroupHelper().getGroups();    
+  public void testGroupDeleteValid() throws Exception {       
+    SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();    
     
     Random rnd = new Random();
     int index = rnd.nextInt(oldList.size()-1);
     
-    app.getGroupHelper().initGroupDelete(index);
-    app.getGroupHelper().returnToGroupsPage();
+    app.getGroupHelper().deleteGroup(index); 
     
-    List<GroupData> newList = app.getGroupHelper().getGroups();
+    SortedListOf<GroupData> newList = app.getGroupHelper().getGroups();
     
-    oldList.remove(index);
-    Collections.sort(oldList);    
-    assertEquals(oldList, newList);
+    assertThat(newList, equalTo(oldList.without(index)));   
   }
   
   @Test(dataProvider = "randomDataValidGenerator")
-  public void testGroupModifyValid(GroupData group) throws Exception {
-    app.getNavigationHelper().openMainPage();
-    app.getNavigationHelper().gotoGroupPage();
-    
-    List<GroupData> oldList = app.getGroupHelper().getGroups();    
+  public void testGroupModifyValid(GroupData group) throws Exception {    
+    SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();    
     
     Random rnd = new Random();
     int index = rnd.nextInt(oldList.size()-1);
     
-    app.getGroupHelper().initGroupModify(index);
-   
-    app.getGroupHelper().fiilGroupForm(group);
-    app.getGroupHelper().submitGroupModify();
-    app.getGroupHelper().returnToGroupsPage();
+    app.getGroupHelper().modifyGroup(index, group);   
     
-    List<GroupData> newList = app.getGroupHelper().getGroups();
+    SortedListOf<GroupData> newList = app.getGroupHelper().getGroups();
     
-    oldList.remove(index);
-    oldList.add(group);
-    Collections.sort(oldList);    
-    assertEquals(oldList, newList);
+    assertThat(newList, equalTo(oldList.without(index).withAdded(group)));   
   }
 }

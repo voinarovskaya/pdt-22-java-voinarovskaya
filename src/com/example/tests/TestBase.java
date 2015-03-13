@@ -29,11 +29,11 @@ public class TestBase {
 	@DataProvider
 	public Iterator<Object[]> randomDataValidGenerator(){
 		List<Object[]> list = new ArrayList<Object[]>();		
-		for (int i = 0; i < 5; i++) {
-			GroupData group = new GroupData();			
-			group.name =generateRandomString();
-			group.header =generateRandomString();
-			group.footer =generateRandomString();
+		for (int i = 0; i < 1; i++) {
+			GroupData group = new GroupData().
+					withName(generateRandomString()).
+					withHeader(generateRandomString()).
+					withFooter(generateRandomString());		
 			list.add(new Object[]{group});			
 		}
 		return list.iterator();
@@ -49,28 +49,31 @@ public class TestBase {
 		}
 	}
 	
+	public String generateRandomNmberPhone(){
+		Random rnd = new Random();
+		String work = null;
+		for (int j = 0; j < 9; j++) {
+	    	work = work + rnd.nextInt(9);
+		}
+		return work;
+	}
+	
 	@DataProvider
 	public Iterator<Object[]> randomContactValidGenerator(){
 		List<Object[]> list = new ArrayList<Object[]>();		
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 1; i++) {
 			Random rnd = new Random();
-			ContactData contact = new ContactData();
-			contact.firstname = "alisa" + rnd.nextInt();
-		    contact.lastname = "voinarovskay" + rnd.nextInt();
-		    contact.address = "street" + rnd.nextInt(10);
-		    contact.address2 = "street" + rnd.nextInt(100);
-		    contact.home = "home" + rnd.nextInt();
-		    contact.email = rnd.nextInt() + "@mail.ru";
-		    contact.email2 =rnd.nextInt() + "@gmail.com";
-		    for (int j = 0; j < 9; j++) {
-		    	 contact.work = contact.work + rnd.nextInt(9);
-			}
-		    for (int j = 0; j < 9; j++) {
-		    	 contact.phone2 = contact.phone2 + rnd.nextInt(9);
-			}		   
-		    contact.birthday = String.valueOf(rnd.nextInt(27) +1);
-		    contact.birthyear = String.valueOf(1960 + rnd.nextInt(50) +1);
-		    contact.bitrhmonth = "February";  			
+			ContactData contact = new ContactData().
+					withFirstname("alisa" + rnd.nextInt()).
+					withLastname("voinarovskay" + rnd.nextInt()).
+					withAddress("street" + rnd.nextInt(10)).
+					withAddress2("street" + rnd.nextInt(100)).
+					withEmail(rnd.nextInt() + "@mail.ru").
+					withEmail2(rnd.nextInt() + "@gmail.com").					
+					withPhone2(generateRandomNmberPhone()).
+					withBirthday(String.valueOf(rnd.nextInt(27) +1)).
+					withBirthyear(String.valueOf(1960 + rnd.nextInt(50) +1)).
+					withBirthmonth("February");			
 			list.add(new Object[]{contact});			
 		}
 		return list.iterator();
