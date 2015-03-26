@@ -1,0 +1,10 @@
+alisa2003301760,voinarovskay1266072440,street0,street95,3,2002,February,-139593493@mail.ru,-1248410633@gmail.com,null,null065308382,null036848222,!
+alisa160566968,voinarovskay-2056017109,street3,street64,3,2010,February,672924147@mail.ru,1528235160@gmail.com,null,null243703818,null256313324,!
+alisa2093914801,voinarovskay367965837,street2,street78,23,1971,February,867709988@mail.ru,-1834441901@gmail.com,null,null335827074,null024016637,!
+alisa602272282,voinarovskay464860006,street8,street52,9,2002,February,1875652386@mail.ru,1036625246@gmail.com,null,null418336260,null855588371,!
+alisa-621909917,voinarovskay-520744560,street1,street49,25,2002,February,754129770@mail.ru,1101494923@gmail.com,null,null244776608,null227211267,!
+alisa978412453,voinarovskay465393418,street1,street96,7,1981,February,-1578600214@mail.ru,560406431@gmail.com,null,null053554160,null665131453,!
+alisa-896968534,voinarovskay-514146768,street3,street86,12,2005,February,-70903273@mail.ru,-1045193668@gmail.com,null,null227760484,null310246008,!
+alisa-958093235,voinarovskay921293598,street8,street56,25,1963,February,992629796@mail.ru,-1618775711@gmail.com,null,null174564020,null473121741,!
+alisa1379393300,voinarovskay-760452892,street2,street0,23,1978,February,-127068272@mail.ru,-44479974@gmail.com,null,null268804017,null330325316,!
+alisa2037883178,voinarovskay1814200601,street4,street74,13,1980,February,1031970286@mail.ru,-2104927047@gmail.com,null,null257638835,null442533200,!

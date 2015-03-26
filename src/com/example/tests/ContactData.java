@@ -107,15 +107,7 @@ public class ContactData implements Comparable<ContactData> {
 			if (compareString(this.firstname, other.firstname) != 0) {
 				return compareString(this.firstname, other.firstname);			
 			} else {
-				if (compareString(this.home, other.home) != 0) {
-					return compareString(this.home, other.home);			
-				} else {
-					if (compareString(this.email, other.email) != 0) {
-						return compareString(this.email, other.email);			
-					} else {
-						return 0;
-					}
-				}
+				return 0;
 			}
 		}		
 	}

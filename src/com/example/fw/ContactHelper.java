@@ -76,8 +76,7 @@ public class ContactHelper extends HelperBase {
 	}
 	
 	public ContactHelper submitContactModify() {		
-		click(By.xpath("//*[@value='Update']"));
-		cachedContact = null;
+		click(By.xpath("//*[@value='Update']"));		
 		return this;
 	}	
 	
