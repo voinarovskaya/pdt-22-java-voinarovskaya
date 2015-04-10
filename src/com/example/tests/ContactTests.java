@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -30,7 +31,7 @@ public class ContactTests extends TestBase {
 	
   @Test(dataProvider = "contactsFromFile")
   public void testCreationsContact(ContactData contact) throws Exception {	  
-	SortedListOf<ContactData> oldList = app.getContactHelper().getContact();	
+	SortedListOf<ContactData> oldList = new SortedListOf<ContactData>(app.getHibernateHelper().listContacts());
     app.getContactHelper().createdContact(contact);       
     SortedListOf<ContactData> newList = app.getContactHelper().getContact();    
     assertThat(newList, equalTo(oldList.withAdded(contact)));   
@@ -38,7 +39,7 @@ public class ContactTests extends TestBase {
   
   @Test
   public void testContactDelete() throws Exception {	  
-	SortedListOf<ContactData> oldList = app.getContactHelper().getContact();	
+	SortedListOf<ContactData> oldList =  new SortedListOf<ContactData>(app.getHibernateHelper().listContacts());
 	Random rnd = new Random();
     int index = rnd.nextInt(oldList.size()-1);    
 	app.getContactHelper().deleteContact(index);      
@@ -48,7 +49,7 @@ public class ContactTests extends TestBase {
   
   @Test(dataProvider = "contactsFromFile")
   public void testContactModify(ContactData contact) throws Exception {
-	SortedListOf<ContactData> oldList = app.getContactHelper().getContact();	
+	SortedListOf<ContactData> oldList =  new SortedListOf<ContactData>(app.getHibernateHelper().listContacts());
 	Random rnd = new Random();
     int index = rnd.nextInt(oldList.size()-1);    
 	app.getContactHelper().modifyContact(index, contact);    

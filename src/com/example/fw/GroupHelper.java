@@ -8,13 +8,11 @@ import org.openqa.selenium.WebElement;
 import com.example.tests.GroupData;
 import com.example.utils.SortedListOf;
 
-public class GroupHelper extends HelperBase {
+public class GroupHelper extends WebDriverHelperBase {
 	
 	public GroupHelper(ApplicationManager manager) {
 		super(manager);		
-	}
-
-	private SortedListOf<GroupData> cachedGroup;
+	}	
 	
 	public GroupHelper returnToGroupsPage() {
 		click(By.linkText("group page"));	
@@ -25,8 +23,7 @@ public class GroupHelper extends HelperBase {
 		initGroupGreated();
     	fiilGroupForm(group);
     	submitGroupGreation();
-    	returnToGroupsPage();
-    	rebildCache();
+    	returnToGroupsPage();    	
     	return this;
 	}
 	
@@ -35,44 +32,31 @@ public class GroupHelper extends HelperBase {
 		input(By.name("group_header"), group.getHeader());
 		input(By.name("group_footer"), group.getFooter());	
 		return this;
-	}
+	}	
 	
-	private void rebildCache() {
-		manager.getNavigationHelper().gotoGroupPage();
-		cachedGroup = new SortedListOf<GroupData>();
-		List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
-		for (WebElement checkbox : checkboxes) {			
-			String title = checkbox.getAttribute("title");
-			String name = title.substring("Select (".length(), title.length()- ")".length());
-			cachedGroup.add(new GroupData().withName(name));			
-		}			
-	}
 
 	public GroupHelper modifyGroup(int index, GroupData group) {
 		 initGroupModify(index);
 		 fiilGroupForm(group);
 		 submitGroupModify();
-		 returnToGroupsPage();	
-		 rebildCache();
+		 returnToGroupsPage();			
 		 return this;
 	}
 
 	public GroupHelper deleteGroup(int index) {
 		submitGroupDelete(index);
-		returnToGroupsPage();
-		rebildCache();
+		returnToGroupsPage();		
 		return this;
 		
 	}
 	///------
 
 	public GroupHelper submitGroupGreation() {		
-		click(By.name("submit"));
-		cachedGroup = null;		
+		click(By.name("submit"));	
 		return this;
 	}
 
-	public GroupHelper initGroupGreated() {
+	public GroupHelper initGroupGreated()  {
 		manager.getNavigationHelper().gotoGroupPage();
 		click(By.name("new"));
 		return this;
@@ -80,8 +64,7 @@ public class GroupHelper extends HelperBase {
 
 	public GroupHelper submitGroupDelete(int index) {		
 		selectGroupByIndex(index);
-		click(By.name("delete"));	
-		cachedGroup = null;
+		click(By.name("delete"));		
 		return this;
 	}
 
@@ -95,17 +78,21 @@ public class GroupHelper extends HelperBase {
 	}
 
 	public GroupHelper submitGroupModify() {
-		click(By.name("update"));
-		cachedGroup = null;
+		click(By.name("update"));		
 		return this;
 		
 	}
 
 	public SortedListOf<GroupData> getGroups() {
-		if (cachedGroup == null) {
-			rebildCache();
-		}
-		return cachedGroup;
+		manager.getNavigationHelper().gotoGroupPage();
+		SortedListOf<GroupData> groups = new SortedListOf<GroupData>();
+		List<WebElement> checkboxes = driver.findElements(By.name("selected[]"));
+		for (WebElement checkbox : checkboxes) {			
+			String title = checkbox.getAttribute("title");
+			String name = title.substring("Select (".length(), title.length()- ")".length());
+			groups.add(new GroupData().withName(name));			
+		}		
+		return groups;
 		
 	}
 

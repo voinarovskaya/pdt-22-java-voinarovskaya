@@ -8,27 +8,23 @@ import org.openqa.selenium.WebElement;
 import com.example.tests.ContactData;
 import com.example.utils.SortedListOf;
 
-public class ContactHelper extends HelperBase {
+public class ContactHelper extends WebDriverHelperBase {
 
 	public ContactHelper(ApplicationManager manager) {
 		super(manager);
 		
-	}
-
-	private SortedListOf<ContactData> cachedContact;
+	}	
 	
 	public ContactHelper createdContact(ContactData contact) {
 		gotoAddContact();
 		fiilFormContact(contact);
-		submitAddContact();
-		rebuilCash();
+		submitAddContact();		
 		return this;
 	}
 
 	public ContactHelper deleteContact(int index) {
 		initContactModify(index);   
-	    submitContactDelete();
-	    rebuilCash();
+	    submitContactDelete();	   
 	    return this;
 		
 	}
@@ -36,8 +32,7 @@ public class ContactHelper extends HelperBase {
 	public ContactHelper modifyContact(int index, ContactData contact) {
 		initContactModify(index);	    
 	    fiilFormContact(contact);
-	    submitContactModify();
-	    rebuilCash();
+	    submitContactModify();	   
 	    return this;		
 	}		
 	
@@ -62,8 +57,7 @@ public class ContactHelper extends HelperBase {
 	}
 	
 	public ContactHelper submitAddContact() {		
-		click(By.name("submit"));	
-		cachedContact = null;
+		click(By.name("submit"));		
 		return this;
 	}
 
@@ -81,27 +75,20 @@ public class ContactHelper extends HelperBase {
 	}	
 	
 	public ContactHelper submitContactDelete() {		
-		click(By.xpath("//*[@value='Delete']"));	
-		cachedContact = null;
+		click(By.xpath("//*[@value='Delete']"));		
 		return this;
 	}
 
 	public SortedListOf<ContactData> getContact() {
-		if (cachedContact == null) {
-			rebuilCash();
-		}		
-		return cachedContact;
-	}
-
-	private void rebuilCash() {
 		manager.getNavigationHelper().openMainPage();
-		cachedContact = new SortedListOf<ContactData>();
+		SortedListOf<ContactData> contacts = new SortedListOf<ContactData>();
 		List<WebElement> rows = getContactRows();
 		for (WebElement row : rows) {			
-			cachedContact.add(new ContactData().
+			contacts.add(new ContactData().
 					withFirstname(row.findElement(By.xpath(".//td[3]")).getText()).
 					withLastname(row.findElement(By.xpath(".//td[2]")).getText()));							
-		}			
+		}		
+		return contacts;
 	}
 
 	private List<WebElement> getContactRows() {

@@ -9,27 +9,17 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class ApplicationManager {
 
-	public WebDriver driver;
+	private WebDriver driver;
 	public String baseUrl;	
 	
 	private NavigationHelper navigationHelper;
 	private GroupHelper groupHelper;
 	private ContactHelper contactHelper;
 	private Properties properties;
+	private HibernateHelper hibernateHelper;
 
 	public ApplicationManager(Properties properties){
 		this.properties = properties;
-		String browser = properties.getProperty("browser");
-		if ("ff".equals(browser)) {
-			driver = new FirefoxDriver();
-		}else if ("ie".equals(browser)) {
-			driver = new InternetExplorerDriver();
-		} else {
-			throw new Error("Не поддерживается" + browser);
-		}		
-	    baseUrl = properties.getProperty("base_url");
-	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get(baseUrl );
 	}
 	
 	public void stop() {
@@ -55,6 +45,31 @@ public class ApplicationManager {
 			contactHelper = new ContactHelper(this);
 		}
 		return contactHelper;		
+	}
+	
+	public HibernateHelper getHibernateHelper(){
+		if (hibernateHelper==null) {
+			hibernateHelper = new HibernateHelper(this);
+		}
+		return hibernateHelper;		
+	}
+
+	public WebDriver getDriver() {		
+		String browser = properties.getProperty("browser");
+		if (driver==null) {			
+			if ("ff".equals(browser)) {
+				driver = new FirefoxDriver();
+			}else if ("ie".equals(browser)) {
+				driver = new InternetExplorerDriver();
+			} else {
+				throw new Error("Не поддерживается" + browser);
+			}		
+		    baseUrl = properties.getProperty("base_url");
+		    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			driver.get(baseUrl );
+		}
+		return driver;	
+		
 	}
 	
 

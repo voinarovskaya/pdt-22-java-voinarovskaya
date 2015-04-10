@@ -27,7 +27,7 @@ public class GroupTests extends TestBase{
 
 @Test(dataProvider = "groupsFromFile")
   public void testGroupCreationValid(GroupData group) throws Exception {    
-    SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();
+    SortedListOf<GroupData> oldList = new SortedListOf<GroupData>(app.getHibernateHelper().listGroups());
     
     app.getGroupHelper().createdGroup(group);    	
     
@@ -38,7 +38,7 @@ public class GroupTests extends TestBase{
  
   @Test
   public void testGroupDeleteValid() throws Exception {       
-    SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();    
+    SortedListOf<GroupData> oldList = new SortedListOf<GroupData>(app.getHibernateHelper().listGroups());
     
     Random rnd = new Random();
     int index = rnd.nextInt(oldList.size()-1);
@@ -52,7 +52,7 @@ public class GroupTests extends TestBase{
   
   @Test(dataProvider = "randomDataValidGenerator")
   public void testGroupModifyValid(GroupData group) throws Exception {    
-    SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();    
+    SortedListOf<GroupData> oldList = new SortedListOf<GroupData>(app.getHibernateHelper().listGroups());
     
     Random rnd = new Random();
     int index = rnd.nextInt(oldList.size()-1);

@@ -5,6 +5,23 @@ public class GroupData implements Comparable<GroupData> {
 	private String name;
 	private String header;
 	private String footer;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setHeader(String header) {
+		this.header = header;
+	}
+
+	public void setFooter(String footer) {
+		this.footer = footer;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	private String id;
 
 	public GroupData(String groupname, String groupheader, String groupfooter) {
 		this.name = groupname;
@@ -66,6 +83,11 @@ public class GroupData implements Comparable<GroupData> {
 		this.footer = footer;
 		return this;
 	}
+	
+	public GroupData withId(String id) {
+		this.id = id;
+		return this;
+	}	
 
 	public String getName() {
 		return name;
@@ -77,7 +99,12 @@ public class GroupData implements Comparable<GroupData> {
 
 	public String getFooter() {
 		return footer;
-	}	
-	
+	}
+
+	public String getId() {
+		return id;
+	}
+
+
 	
 }
