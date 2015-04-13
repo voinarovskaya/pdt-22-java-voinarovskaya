@@ -1,7 +1,12 @@
 package com.example.fw;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -30,7 +35,7 @@ public class ContactHelper extends WebDriverHelperBase {
 	}
 
 	public ContactHelper modifyContact(int index, ContactData contact) {
-		initContactModify(index);	    
+		initContactModify(index);			
 	    fiilFormContact(contact);
 	    submitContactModify();	   
 	    return this;		
@@ -55,6 +60,26 @@ public class ContactHelper extends WebDriverHelperBase {
 		}
 		return this;		
 	}
+	
+	public ContactData infoFromForm() {
+		ContactData contact = new ContactData();
+		contact.setFirstname(getText(By.name("firstname")));  
+		contact.setLastname(getText(By.name("lastname")));
+		contact.setAddress(getText(By.name("address")));
+		contact.setHome(getText(By.name("home")));
+		contact.setMobile(getText(By.name("mobile")));
+		contact.setWork(getText(By.name("work")));
+		contact.setEmail(getText(By.name("email")));
+		contact.setEmail2(getText(By.name("email2")));
+		contact.setBirthyear(getText(By.name("byear"))); 
+		contact.setAddress2(getText(By.name("address2")));
+		contact.setPhone2(getText(By.name("phone2")));
+		contact.setBirthday(getText(By.name("bday")));
+		contact.setBitrhmonth(getText(By.name("bmonth")));	
+		return  contact;		
+	}
+	
+	
 	
 	public ContactHelper submitAddContact() {		
 		click(By.name("submit"));		
@@ -94,4 +119,5 @@ public class ContactHelper extends WebDriverHelperBase {
 	private List<WebElement> getContactRows() {
 		return  driver.findElements(By.xpath("//*[@id='maintable']//tr[@name='entry']"));		
 	}	
+	
 }

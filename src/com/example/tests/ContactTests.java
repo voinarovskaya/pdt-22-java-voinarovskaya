@@ -3,6 +3,7 @@ package com.example.tests;
 import static com.example.tests.ContactDataGenerator.loadContactsFromCsvFile;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
 
+import org.junit.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -51,8 +53,14 @@ public class ContactTests extends TestBase {
   public void testContactModify(ContactData contact) throws Exception {
 	SortedListOf<ContactData> oldList =  new SortedListOf<ContactData>(app.getHibernateHelper().listContacts());
 	Random rnd = new Random();
-    int index = rnd.nextInt(oldList.size()-1);    
-	app.getContactHelper().modifyContact(index, contact);    
+    int index = rnd.nextInt(oldList.size() - 1 );    
+    app.getContactHelper().initContactModify(index);
+    ContactData list =  app.getContactHelper().infoFromForm();
+    app.getOrmHibernateHelper().analise(oldList, list);
+
+    app.getContactHelper().
+    	fiilFormContact(contact).
+    	submitContactModify();	 
     SortedListOf<ContactData> newList = app.getContactHelper().getContact();  
     assertThat(newList, equalTo(oldList.without(index).withAdded(contact)));   
   } 

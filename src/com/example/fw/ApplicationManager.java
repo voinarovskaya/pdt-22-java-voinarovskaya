@@ -17,6 +17,7 @@ public class ApplicationManager {
 	private ContactHelper contactHelper;
 	private Properties properties;
 	private HibernateHelper hibernateHelper;
+	private OrmHibernateHelper ormHibernateHelper;	
 
 	public ApplicationManager(Properties properties){
 		this.properties = properties;
@@ -52,6 +53,13 @@ public class ApplicationManager {
 			hibernateHelper = new HibernateHelper(this);
 		}
 		return hibernateHelper;		
+	}
+	
+	public OrmHibernateHelper getOrmHibernateHelper(){
+		if (ormHibernateHelper==null) {
+			ormHibernateHelper = new OrmHibernateHelper(this);
+		}
+		return ormHibernateHelper;		
 	}
 
 	public WebDriver getDriver() {		

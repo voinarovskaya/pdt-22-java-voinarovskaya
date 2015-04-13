@@ -58,6 +58,10 @@ public abstract class WebDriverHelperBase extends HelperBase{
 			driver.findElement(locator).sendKeys(text);
 		}		
 	}
+	
+	protected String getText(By locator) {
+		return driver.findElement(locator).getAttribute("value");	
+	}
 
 	protected void click(By locator) {
 		driver.findElement(locator).click();

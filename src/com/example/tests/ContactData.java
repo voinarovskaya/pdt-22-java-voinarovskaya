@@ -71,6 +71,8 @@ public class ContactData implements Comparable<ContactData> {
 		return true;
 	}
 	
+	
+	
 	@Override
 	public String toString() {
 		return "ContactData [firstname=" + firstname + ", lastname=" + lastname
@@ -99,6 +101,8 @@ public class ContactData implements Comparable<ContactData> {
 			}
 		}		
 	}
+	
+	
 	
 	public ContactData withId(String id) {
 		this.id = id;
